@@ -13,6 +13,7 @@ const { CREATED, OK } = StatusCodes;
 // Paths
 export const p = {
     get: '/all',
+    get_one: '/:id',
     add: '/add',
     update: '/update',
     delete: '/delete/:id',
@@ -26,6 +27,11 @@ export const p = {
 router.get(p.get, async (_: Request, res: Response) => {
     const users = await userService.getAll();
     return res.status(OK).json({users});
+});
+
+router.get(p.get_one, async (req: Request, res: Response) => {
+    const user = await userService.getOne(req.params.id);
+    return res.status(OK).json({user});
 });
 
 
