@@ -1,4 +1,4 @@
-import userRepo from '@repos/user-repo';
+//import userRepo from '@repos/user-repo';
 import sqlUserRepo from '@repos/sql-user-repo';
 import { IUser } from '@models/user-model';
 import { UserNotFoundError } from '@shared/errors';
@@ -18,6 +18,10 @@ function getAll(): Promise<IUser[]> {
     return sqlUserRepo.getAll();
 }
 
+function getOne(email: string): Promise<IUser | null> {
+    return sqlUserRepo.getOne(email);
+}
+
 /**
  * Add one user.
  * 
@@ -25,7 +29,7 @@ function getAll(): Promise<IUser[]> {
  * @returns 
  */
 function addOne(user: IUser): Promise<void> {
-    return userRepo.add(user);
+    return sqlUserRepo.add(user);
 }
 
 
@@ -36,11 +40,11 @@ function addOne(user: IUser): Promise<void> {
  * @returns 
  */
 async function updateOne(user: IUser): Promise<void> {
-    const persists = await userRepo.persists(user.id);
+    const persists = await sqlUserRepo.persists(user.id);
     if (!persists) {
         throw new UserNotFoundError();
     }
-    return userRepo.update(user);
+    return sqlUserRepo.update(user);
 }
 
 
@@ -51,17 +55,18 @@ async function updateOne(user: IUser): Promise<void> {
  * @returns 
  */
 async function deleteOne(id: number): Promise<void> {
-    const persists = await userRepo.persists(id);
+    const persists = await sqlUserRepo.persists(id);
     if (!persists) {
         throw new UserNotFoundError();
     }
-    return userRepo.delete(id);
+    return sqlUserRepo.deleteOne(id);
 }
 
 
 // Export default
 export default {
     getAll,
+    getOne,
     addOne,
     updateOne,
     delete: deleteOne,
