@@ -1,4 +1,5 @@
 import userRepo from '@repos/user-repo';
+import sqlUserRepo from '@repos/sql-user-repo';
 import { IUser } from '@models/user-model';
 import { UserNotFoundError } from '@shared/errors';
 
@@ -9,10 +10,13 @@ import { UserNotFoundError } from '@shared/errors';
  * 
  * @returns 
  */
-function getAll(): Promise<IUser[]> {
-    return userRepo.getAll();
-}
+// function getAll(): Promise<IUser[]> {
+//     return userRepo.getAll();
+// }
 
+function getAll(): Promise<IUser[]> {
+    return sqlUserRepo.getAll();
+}
 
 /**
  * Add one user.
