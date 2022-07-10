@@ -1,16 +1,16 @@
-import { IUser } from "../models/user-model";
+import { AlumnoItem } from "@models/alumno-item";
 import abre_bd from "./common-repos";
 
 let dbo: any;
 
-function getOne(email: string): Promise<IUser | null> {
-  return new Promise<IUser | null>((resolve, reject) => {
+function getOne(id: number): Promise<AlumnoItem | null> {
+  return new Promise<AlumnoItem | null>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE email = ?",
-        [email],
-        (err: any, rows: IUser[]) => {
+        "SELECT * FROM alumnos WHERE id = ?",
+        [id],
+        (err: any, rows: AlumnoItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -22,15 +22,14 @@ function getOne(email: string): Promise<IUser | null> {
   });
 }
 
-// See if a user with the given id exists.
 function persists(id: number): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM alumnos WHERE id = ?",
         [id],
-        (err: any, rows: IUser[]) => {
+        (err: any, rows: AlumnoItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -42,11 +41,11 @@ function persists(id: number): Promise<boolean> {
   });
 }
 
-function getAll(): Promise<IUser[]> {
-  return new Promise<IUser[]>((resolve, reject) => {
+function getAll(): Promise<AlumnoItem[]> {
+  return new Promise<AlumnoItem[]>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
-      i.db.all("SELECT * FROM users", (err: any, rows: IUser[]) => {
+      i.db.all("SELECT * FROM alumnos", (err: any, rows: AlumnoItem[]) => {
         if (err) {
           reject(err);
         } else {
@@ -57,14 +56,20 @@ function getAll(): Promise<IUser[]> {
   });
 }
 
-// Add one user.
-function add(user: IUser): Promise<void> {
+function add(alumno: AlumnoItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "INSERT INTO users (id, email, name) VALUES (?, ?, ?)",
-        [user.id, user.email, user.name],
+        "INSERT INTO alumnos (matricula, nombre, apellidos, email, fechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          alumno.matricula,
+          alumno.nombre,
+          alumno.apellidos,
+          alumno.email,
+          alumno.fechaNacimiento,
+          alumno.genero
+        ],
         (err: any) => {
           if (err) {
             reject(err);
@@ -77,14 +82,21 @@ function add(user: IUser): Promise<void> {
   });
 }
 
-// Update a user.
-function update(user: IUser): Promise<void> {
+function update(alumno: AlumnoItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "UPDATE users SET email = ?, name = ? WHERE id = ?",
-        [user.email, user.name, user.id],
+        "UPDATE alumnos SET matricula = ?, nombre = ?, apellidos = ?, email = ?, fechaNacimiento = ?, genero = ? WHERE id = ?",
+        [
+          alumno.matricula,
+          alumno.nombre,
+          alumno.apellidos,
+          alumno.email,
+          alumno.fechaNacimiento,
+          alumno.genero,
+          alumno.id
+        ],
         (err: any) => {
           if (err) {
             reject(err);
@@ -97,13 +109,12 @@ function update(user: IUser): Promise<void> {
   });
 }
 
-// Delete one user.
 function deleteOne(id: number): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "DELETE FROM users WHERE id = ?",
+        "DELETE FROM alumnos WHERE id = ?",
         [id],
         (err: any) => {
           if (err) {
@@ -117,4 +128,4 @@ function deleteOne(id: number): Promise<void> {
   });
 }
 
-export default { getOne, persists, getAll, add, update, deleteOne };
+export default { getOne, getAll, add, update, deleteOne, persists };

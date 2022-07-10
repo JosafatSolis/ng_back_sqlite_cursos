@@ -1,13 +1,15 @@
 # Cambios Siguientes
 
 ## Confirmados
-- Implementar SQLite para el entitiy de muestra (user) en otro repo
-    - Implementar readAll
-- Agregar los tipos, **repos**, servicios necesarios
+- Agregar los tipos, repos, servicios, **routes** necesarios
     - Alumno
     - Curso
     - Usuario
     - Inscripcion
+- Implementar SQLite para otros Entities (Alumno, Curso, Usuario, Inscripcion)
+    - ...-repo
+    - ...-service
+    - ...-router
 - Hacer pruebas de conexión con el Front
 - Habilitar todos los métodos CRUD a los distintos componentes.
 

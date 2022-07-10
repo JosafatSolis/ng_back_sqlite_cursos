@@ -1,0 +1,52 @@
+
+###
+// GetAll
+GET http://localhost:3000/api/cursos/all
+
+###
+// GetOne
+GET http://localhost:3000/api/cursos/1
+
+###
+// Add 1
+POST http://localhost:3000/api/cursos/add
+Content-Type: application/json
+
+{ "course" : {
+  "nombre": "Angular",
+  "fechaInicio": "2022-01-01",
+  "fechaFin": "2022-02-01",
+  "creditos": "4",
+  "descripcion": "Curso de Angular"
+}}
+
+###
+// Add 2
+POST http://localhost:3000/api/cursos/add
+Content-Type: application/json
+
+{ "course" : {
+  "nombre": "React",
+  "fechaInicio": "2022-02-02",
+  "fechaFin": "2022-03-03",
+  "creditos": "6",
+  "descripcion": "Curso de React"
+}}
+
+###
+// Update
+PUT http://localhost:3000/api/cursos/update
+Content-Type: application/json
+
+{ "course" : {
+  "id": "1",
+  "nombre": "Angular 2",
+  "fechaInicio": "2022-01-01",
+  "fechaFin": "2022-02-01",
+  "creditos": "4",
+  "descripcion": "Curso de Angular renovado"
+}}
+
+###
+// Delete
+DELETE http://localhost:3000/api/cursos/2

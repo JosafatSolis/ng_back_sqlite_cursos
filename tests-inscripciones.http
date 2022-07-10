@@ -1,0 +1,67 @@
+
+###
+// GetAll
+GET http://localhost:3000/api/inscripciones/all?curso=1&alumno=1
+
+###
+// GetOne
+GET http://localhost:3000/api/inscripciones/1
+
+###
+// Add 1
+POST http://localhost:3000/api/inscripciones/add
+Content-Type: application/json
+
+{ "inscripcion" : {
+  "alumno": {
+    "id":"1"
+    },
+  "curso": {
+    "id": "1"
+    },
+  "fechaInscripcion": "2022-01-01",
+  "inscritoPor": {
+    "id": "1"
+    }
+}}
+
+###
+// Add 2
+POST http://localhost:3000/api/inscripciones/add
+Content-Type: application/json
+
+{ "inscripcion" : {
+  "alumno": {
+    "id":"1"
+    },
+  "curso": {
+    "id":"2"
+    },
+  "fechaInscripcion": "2022-01-02",
+  "inscritoPor": {
+    "id":"1"
+    }
+}}
+
+###
+// Update
+PUT http://localhost:3000/api/inscripciones/update
+Content-Type: application/json
+
+{ "inscripcion" : {
+  "id": "3",
+  "alumno": {
+    "id":"2"
+    },
+  "curso": {
+    "id":"2"
+    },
+  "fechaInscripcion": "2022-01-04",
+  "inscritoPor": {
+    "id":"1"
+    }
+}}
+
+###
+// Delete
+DELETE http://localhost:3000/api/inscripciones/2

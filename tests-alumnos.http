@@ -1,0 +1,55 @@
+
+###
+// GetAll
+GET http://localhost:3000/api/alumnos/all
+
+###
+// GetOne
+GET http://localhost:3000/api/alumnos/1
+
+###
+// Add 1
+POST http://localhost:3000/api/alumnos/add
+Content-Type: application/json
+
+{ "alumno" : {
+  "matricula": "12345",
+  "nombre": "Juan Carlos",
+  "apellidos": "Reyes Perez",
+  "email": "juan.reyes@gmail.com",
+  "fechaNacimiento": "1990-01-01",
+  "genero": "M"
+}}
+
+###
+// Add 2
+POST http://localhost:3000/api/alumnos/add
+Content-Type: application/json
+
+{ "alumno" : {
+  "matricula": "76543",
+  "nombre": "Omar",
+  "apellidos": "Bautista",
+  "email": "omar.bautista@gmail.com",
+  "fechaNacimiento": "1992-01-01",
+  "genero": "M"
+}}
+
+###
+// Update
+PUT http://localhost:3000/api/alumnos/update
+Content-Type: application/json
+
+{ "alumno" : {
+  "id": "1",
+  "matricula": "12345",
+  "nombre": "Juan Carlos",
+  "apellidos": "Reyes Perez",
+  "email": "juan.reyes@gmail-nuevo.com",
+  "fechaNacimiento": "1990-01-01",
+  "genero": "M"
+}}
+
+###
+// Delete
+DELETE http://localhost:3000/api/alumnos/2

@@ -1,16 +1,16 @@
-import { IUser } from "../models/user-model";
+import { UsuarioItem } from "@models/usuario-item";
 import abre_bd from "./common-repos";
 
 let dbo: any;
 
-function getOne(email: string): Promise<IUser | null> {
-  return new Promise<IUser | null>((resolve, reject) => {
+function getOne(id: number): Promise<UsuarioItem | null> {
+  return new Promise<UsuarioItem | null>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE email = ?",
-        [email],
-        (err: any, rows: IUser[]) => {
+        "SELECT * FROM usuarios WHERE id = ?",
+        [id],
+        (err: any, rows: UsuarioItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -22,15 +22,14 @@ function getOne(email: string): Promise<IUser | null> {
   });
 }
 
-// See if a user with the given id exists.
 function persists(id: number): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM usuarios WHERE id = ?",
         [id],
-        (err: any, rows: IUser[]) => {
+        (err: any, rows: UsuarioItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -42,11 +41,11 @@ function persists(id: number): Promise<boolean> {
   });
 }
 
-function getAll(): Promise<IUser[]> {
-  return new Promise<IUser[]>((resolve, reject) => {
+function getAll(): Promise<UsuarioItem[]> {
+  return new Promise<UsuarioItem[]>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
-      i.db.all("SELECT * FROM users", (err: any, rows: IUser[]) => {
+      i.db.all("SELECT * FROM usuarios", (err: any, rows: UsuarioItem[]) => {
         if (err) {
           reject(err);
         } else {
@@ -57,14 +56,21 @@ function getAll(): Promise<IUser[]> {
   });
 }
 
-// Add one user.
-function add(user: IUser): Promise<void> {
+function add(usuario: UsuarioItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "INSERT INTO users (id, email, name) VALUES (?, ?, ?)",
-        [user.id, user.email, user.name],
+        "INSERT INTO usuarios (username, nombre, pwd, alumnosCUD, cursosCUD, inscripcionesCUD, usuariosCUD) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+          usuario.username,
+          usuario.nombre,
+          usuario.pwd,
+          usuario.alumnosCUD,
+          usuario.cursosCUD,
+          usuario.inscripcionesCUD,
+          usuario.usuariosCUD
+        ],
         (err: any) => {
           if (err) {
             reject(err);
@@ -77,14 +83,22 @@ function add(user: IUser): Promise<void> {
   });
 }
 
-// Update a user.
-function update(user: IUser): Promise<void> {
+function update(usuario: UsuarioItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "UPDATE users SET email = ?, name = ? WHERE id = ?",
-        [user.email, user.name, user.id],
+        "UPDATE usuarios SET username = ?, nombre = ?, pwd = ?, alumnosCUD = ?, cursosCUD = ?, inscripcionesCUD = ?, usuariosCUD = ? WHERE id = ?",
+        [
+          usuario.username,
+          usuario.nombre,
+          usuario.pwd,
+          usuario.alumnosCUD,
+          usuario.cursosCUD,
+          usuario.inscripcionesCUD,
+          usuario.usuariosCUD,
+          usuario.id
+        ],
         (err: any) => {
           if (err) {
             reject(err);
@@ -97,13 +111,12 @@ function update(user: IUser): Promise<void> {
   });
 }
 
-// Delete one user.
 function deleteOne(id: number): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "DELETE FROM users WHERE id = ?",
+        "DELETE FROM usuarios WHERE id = ?",
         [id],
         (err: any) => {
           if (err) {
@@ -117,4 +130,4 @@ function deleteOne(id: number): Promise<void> {
   });
 }
 
-export default { getOne, persists, getAll, add, update, deleteOne };
+export default { getOne, getAll, add, update, deleteOne, persists };

@@ -1,0 +1,58 @@
+
+###
+// GetAll
+GET http://localhost:3000/api/usuarios/all
+
+###
+// GetOne
+GET http://localhost:3000/api/usuarios/1
+
+###
+// Add 1
+POST http://localhost:3000/api/usuarios/add
+Content-Type: application/json
+
+{ "usuario" : {
+  "username": "pedro15",
+  "nombre": "Pedro Ramirez",
+  "pwd": "1234",
+  "alumnosCUD": "1",
+  "cursosCUD": "0",
+  "inscripcionesCUD": "0",
+  "usuariosCUD": "0"
+}}
+
+###
+// Add 2
+POST http://localhost:3000/api/usuarios/add
+Content-Type: application/json
+
+{ "usuario" : {
+  "username": "maria15",
+  "nombre": "Maria Lopez",
+  "pwd": "1234",
+  "alumnosCUD": "1",
+  "cursosCUD": "1",
+  "inscripcionesCUD": "1",
+  "usuariosCUD": "0"
+}}
+
+###
+// Update
+PUT http://localhost:3000/api/usuarios/update
+Content-Type: application/json
+
+{ "usuario" : {
+  "id": "1",
+  "username": "pedro15",
+  "nombre": "Pedro Ramirez Ramirez",
+  "pwd": "1234",
+  "alumnosCUD": "1",
+  "cursosCUD": "0",
+  "inscripcionesCUD": "0",
+  "usuariosCUD": "0"
+}}
+
+###
+// Delete
+DELETE http://localhost:3000/api/usuarios/2

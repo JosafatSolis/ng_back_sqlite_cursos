@@ -1,27 +1,16 @@
-import { IUser } from "../models/user-model";
-const path = require("path");
-import sqlite3, { Database, Statement } from "sqlite3";
-import { open } from "sqlite";
+import { CursoItem } from "@models/curso-item";
+import abre_bd from "./common-repos";
 
-var dbo: any;
+let dbo: any;
 
-const abre_bd = function () {
-  if (!dbo) {
-    dbo = open({
-      filename: path.join(__dirname, "../assets", "test.db"),
-      driver: sqlite3.Database,
-    });
-  }
-};
-
-function getOne(email: string): Promise<IUser | null> {
-  return new Promise<IUser | null>((resolve, reject) => {
-    abre_bd();
+function getOne(id: number): Promise<CursoItem | null> {
+  return new Promise<CursoItem | null>((resolve, reject) => {
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE email = ?",
-        [email],
-        (err: any, rows: IUser[]) => {
+        "SELECT * FROM cursos WHERE id = ?",
+        [id],
+        (err: any, rows: CursoItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -33,15 +22,14 @@ function getOne(email: string): Promise<IUser | null> {
   });
 }
 
-// See if a user with the given id exists.
 function persists(id: number): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    abre_bd();
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM cursos WHERE id = ?",
         [id],
-        (err: any, rows: IUser[]) => {
+        (err: any, rows: CursoItem[]) => {
           if (err) {
             reject(err);
           } else {
@@ -53,11 +41,11 @@ function persists(id: number): Promise<boolean> {
   });
 }
 
-function getAll(): Promise<IUser[]> {
-  return new Promise<IUser[]>((resolve, reject) => {
-    abre_bd();
+function getAll(): Promise<CursoItem[]> {
+  return new Promise<CursoItem[]>((resolve, reject) => {
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
-      i.db.all("SELECT * FROM users", (err: any, rows: IUser[]) => {
+      i.db.all("SELECT * FROM cursos", (err: any, rows: CursoItem[]) => {
         if (err) {
           reject(err);
         } else {
@@ -68,14 +56,13 @@ function getAll(): Promise<IUser[]> {
   });
 }
 
-// Add one user.
-function add(user: IUser): Promise<void> {
+function add(curso: CursoItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    abre_bd();
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "INSERT INTO users (id, email, name) VALUES (?, ?, ?)",
-        [user.id, user.email, user.name],
+        "INSERT INTO cursos (nombre, fechaInicio, fechaFin, creditos, descripcion) VALUES (?, ?, ?, ?, ?)",
+        [curso.nombre, curso.fechaInicio, curso.fechaFin, curso.creditos, curso.descripcion],
         (err: any) => {
           if (err) {
             reject(err);
@@ -88,14 +75,13 @@ function add(user: IUser): Promise<void> {
   });
 }
 
-// Update a user.
-function update(user: IUser): Promise<void> {
+function update(curso: CursoItem): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    abre_bd();
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "UPDATE users SET email = ?, name = ? WHERE id = ?",
-        [user.email, user.name, user.id],
+        "UPDATE cursos SET nombre = ?, fechaInicio = ?, fechaFin = ?, creditos = ?, descripcion = ? WHERE id = ?",
+        [curso.nombre, curso.fechaInicio, curso.fechaFin, curso.creditos, curso.descripcion, curso.id],
         (err: any) => {
           if (err) {
             reject(err);
@@ -108,13 +94,12 @@ function update(user: IUser): Promise<void> {
   });
 }
 
-// Delete one user.
 function deleteOne(id: number): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    abre_bd();
+    dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.run(
-        "DELETE FROM users WHERE id = ?",
+        "DELETE FROM cursos WHERE id = ?",
         [id],
         (err: any) => {
           if (err) {
