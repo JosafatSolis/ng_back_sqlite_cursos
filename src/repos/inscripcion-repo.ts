@@ -1,5 +1,6 @@
 import { InscripcionItem } from "@models/inscripcion-item";
 import abre_bd from "./common-repos";
+import { InscripcionDTO } from '../models/inscripcion-dto';
 
 let dbo: any;
 
@@ -41,8 +42,8 @@ function persists(id: number): Promise<boolean> {
   });
 }
 
-function getAll(alumno_id?: string, curso_id?: string): Promise<InscripcionItem[]> {
-  return new Promise<InscripcionItem[]>((resolve, reject) => {
+function getAll(alumno_id?: string, curso_id?: string): Promise<InscripcionDTO[]> {
+  return new Promise<InscripcionDTO[]>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       let sql = "SELECT * FROM inscripciones";
@@ -57,7 +58,7 @@ function getAll(alumno_id?: string, curso_id?: string): Promise<InscripcionItem[
       if (curso_id) {
         args.push(curso_id);
       }
-      i.db.all(sql, args, (err: any, rows: InscripcionItem[]) => {
+      i.db.all(sql, args, (err: any, rows: InscripcionDTO[]) => {
         if (err) {
           reject(err);
         } else {

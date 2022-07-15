@@ -1,12 +1,19 @@
 import alumnoRepo from "@repos/alumno-repo";
 import { AlumnoItem } from "@models/alumno-item";
 import { AlumnoNotFounderror } from "@shared/errors";
+import { CursoItem } from '../models/curso-item';
 
 function getAll(): Promise<AlumnoItem[]> {
   return alumnoRepo.getAll();
 }
 
-function getOne(id: number): Promise<AlumnoItem | null> {
+async function getOne(id: number): Promise<AlumnoItem | null> {
+  // const alumno = await alumnoRepo.getOne(id);
+  // // Obtenemos los cursos del alumno con base en las Inscripciones
+  // let cursos: CursoItem[];
+  // alumno?.cursos.forEach(element => {
+    
+  // });
   return alumnoRepo.getOne(id);
 }
 

@@ -1,7 +1,8 @@
-
+// Instalar Extensión REST Client de Huacho Mao
 ###
 // GetAll
-GET http://localhost:3000/api/inscripciones/all?curso=1&alumno=1
+// ?curso=1&alumno=1
+GET http://localhost:3000/api/inscripciones/all
 
 ###
 // GetOne

@@ -2,17 +2,35 @@ import inscripcionRepo from "@repos/inscripcion-repo";
 import { InscripcionItem } from "@models/inscripcion-item";
 import { InscripcionNotFoundError } from "@shared/errors";
 import cursoService from "./curso-service";
+import alumnoService from "./alumno-service";
 import { AlumnoItem } from "@models/alumno-item";
+import { CursoItem } from '../models/curso-item';
+import usuarioService from "./usuario-service";
+import { UsuarioItem } from '../models/usuario-item';
 
-function getAll(alumno_id?: string, curso_id ?: string): Promise<InscripcionItem[]> {
-  // let resp: Promise<InscripcionItem[]>;
-  console.log('alumno:', alumno_id, 'curso:', curso_id);
-  // let inscripciones = await inscripcionRepo.getAll(alumno_id, curso_id);
-  // inscripciones.forEach(inscripcion => {
-  //   inscripcion.curso = await cursoService.getOne(inscripcion.curso);
-  return inscripcionRepo.getAll(alumno_id, curso_id);
-  // });
-  return inscripcionRepo.getAll(alumno_id, curso_id);
+async function getAll(alumno_id?: string, curso_id ?: string): Promise<InscripcionItem[]> {
+  let inscripciones_dto = await inscripcionRepo.getAll(alumno_id, curso_id);
+  // For each inscription, get data from alumno, curso, usuario and inscritoPor, then adds to array
+  let inscripciones : InscripcionItem[] = [];
+  for(const i_dto of inscripciones_dto) {
+    let alumno = await alumnoService.getOne(i_dto.alumno);
+    let curso = await cursoService.getOne(i_dto.curso);
+    let usuario = await usuarioService.getOne(i_dto.inscritoPor);
+    let nvo: InscripcionItem = {
+      id: i_dto.id,
+      alumno: alumno as AlumnoItem,
+      curso: curso as CursoItem,
+      fechaInscripcion: new Date(i_dto.fechaInscripcion),
+      fechaBorrado: i_dto.fechaBorrado ? new Date(i_dto.fechaBorrado) : null,
+      inscritoPor: usuario as UsuarioItem,
+      borradoPor: i_dto.borradoPor ? await usuarioService.getOne(i_dto.borradoPor) : null
+    };
+    console.log(nvo);
+    inscripciones.push(nvo)
+  }
+  console.log(inscripciones);
+  // Return a Promise
+  return Promise.resolve(inscripciones);
 }
 
 function getOne(id: number): Promise<InscripcionItem | null> {

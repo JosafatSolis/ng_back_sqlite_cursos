@@ -1,7 +1,7 @@
 # Cambios Siguientes
 
 ## Confirmados
-- Agregar los tipos, repos, servicios, **routes** necesarios
+- Agregar los tipos, repos, servicios, y routes necesarios
     - Alumno
     - Curso
     - Usuario
@@ -10,6 +10,10 @@
     - ...-repo
     - ...-service
     - ...-router
+- Habilitar entidades relacionadas en las respuestas:
+    - Inscripcion.Alumno/Curso/Inscrito por*
+        - Probar el método .map para hacer las consultas en paralelo (https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-loop?answertab=trending#tab-top)
+    - Alumno.Cursos
 - Hacer pruebas de conexión con el Front
 - Habilitar todos los métodos CRUD a los distintos componentes.
 
