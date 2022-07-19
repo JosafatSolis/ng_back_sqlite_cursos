@@ -1,16 +1,16 @@
-import { AlumnoItem } from "@models/alumno-item";
+import { AlumnoDTO } from "@models/alumno-dto";
 import abre_bd from "./common-repos";
 
 let dbo: any;
 
-function getOne(id: number): Promise<AlumnoItem | null> {
-  return new Promise<AlumnoItem | null>((resolve, reject) => {
+function getOne(id: number): Promise<AlumnoDTO | null> {
+  return new Promise<AlumnoDTO | null>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
       i.db.all(
         "SELECT * FROM alumnos WHERE id = ?",
         [id],
-        (err: any, rows: AlumnoItem[]) => {
+        (err: any, rows: AlumnoDTO[]) => {
           if (err) {
             reject(err);
           } else {
@@ -29,7 +29,7 @@ function persists(id: number): Promise<boolean> {
       i.db.all(
         "SELECT * FROM alumnos WHERE id = ?",
         [id],
-        (err: any, rows: AlumnoItem[]) => {
+        (err: any, rows: AlumnoDTO[]) => {
           if (err) {
             reject(err);
           } else {
@@ -41,11 +41,11 @@ function persists(id: number): Promise<boolean> {
   });
 }
 
-function getAll(): Promise<AlumnoItem[]> {
-  return new Promise<AlumnoItem[]>((resolve, reject) => {
+function getAll(): Promise<AlumnoDTO[]> {
+  return new Promise<AlumnoDTO[]>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
-      i.db.all("SELECT * FROM alumnos", (err: any, rows: AlumnoItem[]) => {
+      i.db.all("SELECT * FROM alumnos", (err: any, rows: AlumnoDTO[]) => {
         if (err) {
           reject(err);
         } else {
@@ -56,7 +56,7 @@ function getAll(): Promise<AlumnoItem[]> {
   });
 }
 
-function add(alumno: AlumnoItem): Promise<void> {
+function add(alumno: AlumnoDTO): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
@@ -82,7 +82,7 @@ function add(alumno: AlumnoItem): Promise<void> {
   });
 }
 
-function update(alumno: AlumnoItem): Promise<void> {
+function update(alumno: AlumnoDTO): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     dbo = abre_bd(dbo);
     dbo.then((i: any) => {
