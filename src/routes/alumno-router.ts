@@ -18,13 +18,13 @@ export const p = {
 
 // Get all alumnos.
 router.get(p.get, async (_: Request, res: Response) => {
-    const alumnos = await alumnoService.getAll();
+    const alumnos = await alumnoService.getAll(true);
     return res.status(OK).json({ alumnos });
 });
 
 // Get one alumno.
 router.get(p.get_one, async (req: Request, res: Response) => {
-    const alumno = await alumnoService.getOne(+req.params.id);
+    const alumno = await alumnoService.getOne(+req.params.id, true);
     return res.status(OK).json({ alumno });
 });
 

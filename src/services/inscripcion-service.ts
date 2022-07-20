@@ -13,7 +13,7 @@ async function getAll(alumno_id?: string, curso_id ?: string): Promise<Inscripci
   // For each inscription, get data from alumno, curso, usuario and inscritoPor, then adds to array
   let inscripciones : InscripcionItem[] = [];
   for(const i_dto of inscripciones_dto) {
-    let alumno = await alumnoService.getOne(i_dto.alumno);
+    let alumno = await alumnoService.getOne(i_dto.alumno, false);
     let curso = await cursoService.getOne(i_dto.curso);
     let usuario = await usuarioService.getOne(i_dto.inscritoPor);
     let nvo: InscripcionItem = {
@@ -25,10 +25,8 @@ async function getAll(alumno_id?: string, curso_id ?: string): Promise<Inscripci
       inscritoPor: usuario as UsuarioItem,
       borradoPor: i_dto.borradoPor ? await usuarioService.getOne(i_dto.borradoPor) : null
     };
-    console.log(nvo);
     inscripciones.push(nvo)
   }
-  console.log(inscripciones);
   // Return a Promise
   return Promise.resolve(inscripciones);
 }

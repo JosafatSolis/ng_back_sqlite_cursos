@@ -15,6 +15,7 @@
         - Probar el método .map para hacer las consultas en paralelo (pendiente)(https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-loop?answertab=trending#tab-top)
     - Cambiar respuestas de Repos para regresar DTO's, en lugar de Entidades
     - **Alumno.Cursos**
+        - Habilitar en las otras operaciones (Add, Update, Delete) las operaciones relacionadas con los Cursos del Alumno.
 - Hacer pruebas de conexión con el Front
 - Habilitar todos los métodos CRUD a los distintos componentes.
 

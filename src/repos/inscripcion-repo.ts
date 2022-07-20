@@ -50,7 +50,6 @@ function getAll(alumno_id?: string, curso_id?: string): Promise<InscripcionDTO[]
       sql = alumno_id || curso_id ? sql + " WHERE" : sql;
       sql = alumno_id ? sql + " alumno = ?" : sql;
       sql = curso_id ? sql + (alumno_id ? " AND" : "") + " curso = ?" : sql;
-      console.log(sql);
       let args = [];
       if (alumno_id) {
         args.push(alumno_id);
